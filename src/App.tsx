@@ -1,11 +1,11 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import ComponentIndex from "./components/pages/ComponentIndex";
 
 function App() {
   return (
-    <div className="App">
-      <p>This is Top Page!</p>
+    <div>
+      <ComponentIndex />
     </div>
   );
 }
