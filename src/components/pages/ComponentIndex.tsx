@@ -6,6 +6,7 @@ import ComponentBox from "../molecules/ComponentBox";
 import CheckBox from "../molecules/inputs/CheckBox";
 import RadioButton from "../molecules/inputs/RadioButton";
 import SelectBox from "../molecules/inputs/SelectBox";
+import SwitchButton from "../molecules/inputs/Switch";
 
 const SELECT_ITEMS = [
   "1",
@@ -76,7 +77,9 @@ export default function ComponentIndex() {
           options={SELECT_ITEMS}
           helperText="This is Helper Text!"
         />
-        <br />
+      </ComponentBox>
+      <ComponentBox>
+        <SwitchButton label="Switch Button" />
       </ComponentBox>
     </>
   );
