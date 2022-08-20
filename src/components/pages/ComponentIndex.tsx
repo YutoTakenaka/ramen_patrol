@@ -8,20 +8,23 @@ import RadioButton from "../molecules/inputs/RadioButton";
 import SelectBox from "../molecules/inputs/SelectBox";
 
 const SELECT_ITEMS = [
-  { id: "1", item: <MenuItem value={1}>1</MenuItem> },
-  { id: "2", item: <MenuItem value={2}>2</MenuItem> },
-  { id: "3", item: <MenuItem value={3}>3</MenuItem> },
-  { id: "4", item: <MenuItem value={4}>4</MenuItem> },
-  { id: "5", item: <MenuItem value={5}>5</MenuItem> },
+  "1",
+  "2",
+  "3",
+  // { id: "1", item: <MenuItem value={1}>1</MenuItem> },
+  // { id: "2", item: <MenuItem value={2}>2</MenuItem> },
+  // { id: "3", item: <MenuItem value={3}>3</MenuItem> },
+  // { id: "4", item: <MenuItem value={4}>4</MenuItem> },
+  // { id: "5", item: <MenuItem value={5}>5</MenuItem> },
 ];
 
 export default function ComponentIndex() {
   // Primary/SecondaryButtonのクリック時の処理
   const onClickBtn = () => {};
   // RadioButtonの処理
-  const [value, setValue] = React.useState("female");
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
+  const [radioValue, setRadioValue] = React.useState("");
+  const handleChangeRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRadioValue((event.target as HTMLInputElement).value);
   };
 
   return (
@@ -56,24 +59,24 @@ export default function ComponentIndex() {
 
       <ComponentBox>
         <p>RadioButton</p>
-        <RadioGroup aria-label="" name="" value={value} onChange={handleChange}>
+        <RadioGroup
+          aria-label=""
+          name=""
+          value={radioValue}
+          onChange={handleChangeRadio}
+        >
           <RadioButton value="1">1</RadioButton>
           <RadioButton value="2">2</RadioButton>
         </RadioGroup>
       </ComponentBox>
       <ComponentBox>
         <p>SelectBox</p>
-        <SelectBox title="Age">
-          {SELECT_ITEMS.map((item) => (
-            <div key={item.id}>{item.item}</div>
-          ))}
-        </SelectBox>
+        <SelectBox
+          title="Age"
+          options={SELECT_ITEMS}
+          helperText="This is Helper Text!"
+        />
         <br />
-        <SelectBox title="Month" helperText="This is Helper Text!">
-          {SELECT_ITEMS.map((item) => (
-            <div key={item.id}>{item.item}</div>
-          ))}
-        </SelectBox>
       </ComponentBox>
     </>
   );

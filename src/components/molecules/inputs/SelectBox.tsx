@@ -7,26 +7,30 @@ import {
 import React from "react";
 
 interface Props {
-  // オプションは呼び出す側でmap関数を使って指定する
-  children: React.ReactNode;
   // 必要に応じて補助テキストを追加
   helperText?: string;
   // SelectBoxのplaceholderとなるテキスト
   title: string;
+  // SelectBoxのオプション
+  options: Array<string>;
 }
 
-export default function SelectBox({ children, helperText, title }: Props) {
+export default function SelectBox({ helperText, title, options }: Props) {
+  // SelectBoxの処理
   const [item, setItem] = React.useState("");
-
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setItem(event.target.value as string);
   };
+  const optionItems = options.map((option: string) => (
+    <option key={option} value={option}>
+      {option}
+    </option>
+  ));
+
   return (
     <FormControl className="w-36">
       <InputLabel>{title}</InputLabel>
-      <Select value={item} onChange={handleChange}>
-        {children}
-      </Select>
+      <Select onChange={handleChange}>{optionItems}</Select>
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>
   );
