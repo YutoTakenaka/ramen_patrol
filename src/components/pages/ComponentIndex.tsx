@@ -7,6 +7,7 @@ import CheckBox from "../molecules/inputs/CheckBox";
 import RadioButton from "../molecules/inputs/RadioButton";
 import SelectBox from "../molecules/inputs/SelectBox";
 import SwitchButton from "../molecules/inputs/Switch";
+import TextBox from "../molecules/inputs/TexyField";
 
 const SELECT_ITEMS = [
   "1",
@@ -70,6 +71,7 @@ export default function ComponentIndex() {
           <RadioButton value="2">2</RadioButton>
         </RadioGroup>
       </ComponentBox>
+
       <ComponentBox>
         <p>SelectBox</p>
         <SelectBox
@@ -78,8 +80,17 @@ export default function ComponentIndex() {
           helperText="This is Helper Text!"
         />
       </ComponentBox>
+
       <ComponentBox>
         <SwitchButton label="Switch Button" />
+      </ComponentBox>
+
+      <ComponentBox>
+        <TextBox label="name" required={true} disabled={false} />
+        <br />
+        <TextBox label="email" required={false} disabled={false} />
+        <br />
+        <TextBox label="Birthday" required={false} disabled={true} />
       </ComponentBox>
     </>
   );
