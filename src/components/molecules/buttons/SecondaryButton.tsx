@@ -7,10 +7,10 @@ interface Props {
 }
 
 // 呼び出す側で大きさと文字と文字の色を指定する。
-export default function PrimaryButton({ children, onClick }: Props) {
+export default function SecondaryButton({ children, onClick }: Props) {
   return (
     <Button
-      className="bg-gradient-to-r from-pink-500 to-yellow-500"
+      className="bg-gradient-to-r from-gray-400 to-gray-400"
       onClick={onClick}
     >
       {children}
