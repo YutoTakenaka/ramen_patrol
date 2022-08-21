@@ -32,7 +32,7 @@ export default function ComponentIndex() {
   return (
     <>
       <p className="flex items-center justify-center bg-gradient-to-t from-pink-500 to-yellow-500 h-20 w-screen text-white text-center text-3xl">
-        Ramen Patrol
+        <a href="/">Ramen Patrol</a>
       </p>
       <ComponentBox>
         <p>Primary Button</p>
