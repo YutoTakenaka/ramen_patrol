@@ -1,10 +1,14 @@
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ramenImg from "../../assets/images/4.png";
 import FavoriteBorderRoundedIcon from "@material-ui/icons/FavoriteBorderRounded";
+import FavoriteRoundedIcon from "@material-ui/icons/FavoriteRounded";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
-import { Button } from "@material-ui/core";
+import { Button, Modal } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { useState } from "react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -12,15 +16,65 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "#fb8c00",
       fontWeight: "bold",
     },
+    paper: {
+      width: 320,
+      backgroundColor: theme.palette.background.paper,
+      borderRadius: 10,
+      borderColor: "white",
+      display: "flex",
+      justifyContent: "center",
+      cursor: "pointer",
+    },
+    modal: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
   })
 );
 
 export default function PostIndex() {
   const classes = useStyles();
-
-  const showModal = () => {
-    alert();
+  const [open, setOpen] = useState(false);
+  const [like, setLike] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
   };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const onClickLike = () => {
+    setLike(!like);
+  };
+  console.log(like);
+  const body = (
+    <div className={classes.paper}>
+      <div>
+        <p className="text-red-500 text-sm font-bold my-3 text-center">
+          Report
+        </p>
+        <hr className="w-80" />
+        <p className="text-red-500 text-sm font-bold my-3 text-center">
+          Unfollow
+        </p>
+        <hr className="w-80" />
+        <p className="text-sm my-3 text-center">Add to favorites</p>
+        <hr className="w-80" />
+        <p className="text-sm my-3 text-center">Go to post</p>
+        <hr className="w-80" />
+        <p className="text-sm my-3 text-center">Copy link</p>
+        <hr className="w-80" />
+        <p className="text-sm my-3 text-center">Share to...</p>
+        <hr className="w-80" />
+        <p className="text-sm my-3 text-center">Go to profile</p>
+        <hr className="w-80" />
+        <div className="text-sm my-3 text-center" onClick={handleClose}>
+          Cancel
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="md:flex md:justify-evenly m-4">
       <div className="bg-white border-2 border-gray-100 rounded-lg w-fit">
@@ -32,17 +86,47 @@ export default function PostIndex() {
           </div>
           <div
             className="text-sm hover:opacity-50 hover:cursor-pointer"
-            onClick={showModal}
+            onClick={handleOpen}
           >
             ･･･
           </div>
         </div>
+        <Modal
+          className={classes.modal}
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          {body}
+        </Modal>
         {/* img */}
         <div className="w-96 bg-white ">
-          <img src={ramenImg} alt="" />
+          <Carousel
+            infiniteLoop={false}
+            autoFocus={true}
+            autoPlay={false}
+            showThumbs={false}
+            showStatus={false}
+          >
+            <img src={ramenImg} alt="" />
+            <img src={ramenImg} alt="" />
+            <img src={ramenImg} alt="" />
+          </Carousel>
           <div className="flex w-96 my-2 justify-between">
             <div>
-              <FavoriteBorderRoundedIcon className="mx-2 text-red-500 hover:cursor-pointer" />
+              {like ? (
+                <FavoriteRoundedIcon
+                  className="mx-2 text-red-500 hover:cursor-pointer"
+                  onClick={onClickLike}
+                />
+              ) : (
+                <FavoriteBorderRoundedIcon
+                  className="mx-2 text-red-500 hover:cursor-pointer"
+                  onClick={onClickLike}
+                />
+              )}
+
               <ChatBubbleOutlineIcon className="mx-2 hover:cursor-pointer" />
             </div>
             <BookmarkBorderIcon className="mr-4 hover:cursor-pointer" />

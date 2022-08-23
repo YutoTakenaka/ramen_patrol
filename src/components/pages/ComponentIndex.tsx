@@ -7,7 +7,7 @@ import CheckBox from "../molecules/inputs/CheckBox";
 import RadioButton from "../molecules/inputs/RadioButton";
 import SelectBox from "../molecules/inputs/SelectBox";
 import SwitchButton from "../molecules/inputs/Switch";
-import TextBox from "../molecules/inputs/TexyField";
+import TextBox from "../molecules/inputs/TextField";
 
 const SELECT_ITEMS = [
   "1",
