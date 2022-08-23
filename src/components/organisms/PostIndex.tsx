@@ -44,7 +44,7 @@ export default function PostIndex() {
     setOpen(false);
   };
   const onClickLike = () => {
-    setLike(!like);
+    like ? setLike(false) : setLike(true);
   };
   console.log(like);
   const body = (
