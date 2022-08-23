@@ -46,7 +46,6 @@ export default function PostIndex() {
   const onClickLike = () => {
     like ? setLike(false) : setLike(true);
   };
-  console.log(like);
   const body = (
     <div className={classes.paper}>
       <div>
