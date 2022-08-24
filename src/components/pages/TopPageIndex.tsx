@@ -1,4 +1,5 @@
 import { Button } from "@material-ui/core";
+import Footer from "../organisms/Footer";
 import Header from "../organisms/Header";
 import PostIndex from "../organisms/PostIndex";
 
@@ -15,6 +16,7 @@ export default function TopPageIndex() {
           <PostIndex />
         </div>
       </div>
+      <Footer />
     </>
   );
 }

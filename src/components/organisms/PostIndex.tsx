@@ -75,10 +75,10 @@ export default function PostIndex() {
   );
 
   return (
-    <div className="md:flex md:justify-evenly m-4">
+    <div className="md:flex md:justify-evenly p-4">
       <div className="bg-white border-2 border-gray-100 rounded-lg w-fit">
         {/* header */}
-        <div className="flex justify-between items-center m-2">
+        <div className="flex justify-between items-center p-2">
           <div className="flex items-center">
             <AccountCircleIcon />
             <p className="text-sm ml-2">takenaka_yuto</p>
