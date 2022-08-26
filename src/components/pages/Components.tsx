@@ -8,6 +8,8 @@ import RadioButton from "../molecules/inputs/RadioButton";
 import SelectBox from "../molecules/inputs/SelectBox";
 import SwitchButton from "../molecules/inputs/Switch";
 import TextBox from "../molecules/inputs/TextField";
+import Footer from "../organisms/Footer";
+import Header from "../organisms/Header";
 
 const SELECT_ITEMS = [
   "1",
@@ -20,7 +22,7 @@ const SELECT_ITEMS = [
   // { id: "5", item: <MenuItem value={5}>5</MenuItem> },
 ];
 
-export default function ComponentIndex() {
+export default function Components() {
   // Primary/SecondaryButtonのクリック時の処理
   const onClickBtn = () => {};
   // RadioButtonの処理
@@ -31,9 +33,7 @@ export default function ComponentIndex() {
 
   return (
     <>
-      <p className="flex items-center justify-center bg-gradient-to-t from-pink-500 to-yellow-500 h-20 w-screen text-white text-center text-3xl">
-        <a href="/">Ramen Patrol</a>
-      </p>
+      <Header />
       <ComponentBox>
         <p>Primary Button</p>
         <PrimaryButton onClick={onClickBtn}>
@@ -92,6 +92,7 @@ export default function ComponentIndex() {
         <br />
         <TextBox label="Birthday" required={false} disabled={true} />
       </ComponentBox>
+      <Footer />
     </>
   );
 }

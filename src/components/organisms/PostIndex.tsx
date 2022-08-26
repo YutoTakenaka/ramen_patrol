@@ -1,5 +1,5 @@
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import ramenImg from "../../assets/images/4.png";
+import ramenImg from "../../assets/images/tori.png";
 import FavoriteBorderRoundedIcon from "@material-ui/icons/FavoriteBorderRounded";
 import FavoriteRoundedIcon from "@material-ui/icons/FavoriteRounded";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
@@ -75,14 +75,14 @@ export default function PostIndex() {
   );
 
   return (
-    <div className="md:flex md:justify-evenly m-4">
+    <div className="md:flex md:justify-evenly p-4">
       <div className="bg-white border-2 border-gray-100 rounded-lg w-fit">
         {/* header */}
-        <div className="flex justify-between items-center m-2">
-          <div className="flex items-center">
+        <div className="flex justify-between items-center p-2">
+          <a href="/mypage" className="flex items-center">
             <AccountCircleIcon />
             <p className="text-sm ml-2">takenaka_yuto</p>
-          </div>
+          </a>
           <div
             className="text-sm hover:opacity-50 hover:cursor-pointer"
             onClick={handleOpen}

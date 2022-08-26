@@ -19,10 +19,18 @@ export default function Header() {
           </div>
         </div>
         <div className="flex items-center justify-center w-1/3">
-          <HomeRoundedIcon className="mx-4 hover:cursor-pointer" />
-          <AddCircleOutlineRoundedIcon className="mx-4 hover:cursor-pointer" />
-          <FavoriteBorderRoundedIcon className="mx-4 hover:cursor-pointer" />
-          <AccountCircleIcon className="mx-4 hover:cursor-pointer" />
+          <a href="/">
+            <HomeRoundedIcon className="mx-4 hover:cursor-pointer" />
+          </a>
+          <a className="no-underline" href="/component">
+            <AddCircleOutlineRoundedIcon className="mx-4 hover:cursor-pointer" />
+          </a>
+          <a href="">
+            <FavoriteBorderRoundedIcon className="mx-4 hover:cursor-pointer" />
+          </a>
+          <a href="/mypage">
+            <AccountCircleIcon className="mx-4 hover:cursor-pointer" />
+          </a>
         </div>
       </div>
       <hr />
