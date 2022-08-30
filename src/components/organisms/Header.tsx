@@ -4,6 +4,17 @@ import HomeRoundedIcon from "@material-ui/icons/HomeRounded";
 import AddCircleOutlineRoundedIcon from "@material-ui/icons/AddCircleOutlineRounded";
 import FavoriteBorderRoundedIcon from "@material-ui/icons/FavoriteBorderRounded";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+  Divider,
+} from "@chakra-ui/react";
 
 export default function Header() {
   return (
@@ -28,9 +39,26 @@ export default function Header() {
           <a href="">
             <FavoriteBorderRoundedIcon className="mx-4 hover:cursor-pointer" />
           </a>
-          <a href="/mypage">
-            <AccountCircleIcon className="mx-4 hover:cursor-pointer" />
-          </a>
+
+          <Menu>
+            <MenuButton>
+              <AccountCircleIcon className="mx-4 hover:cursor-pointer" />
+            </MenuButton>
+            <MenuList className="block bg-white border border-gray-400 rounded-lg px-4 py-1 w-32">
+              <MenuItem className="mt-1 font-extralight text-xs">
+                <a href="/mypage">Profile</a>
+              </MenuItem>
+              <br />
+              <MenuItem className="mt-1 font-extralight text-xs">
+                Settings
+              </MenuItem>
+              <br />
+              <Divider className="mt-1" />
+              <MenuItem className="my-1 font-extralight text-xs">
+                <a href="/login">Log Out</a>
+              </MenuItem>
+            </MenuList>
+          </Menu>
         </div>
       </div>
       <hr />
