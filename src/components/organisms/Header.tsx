@@ -4,19 +4,36 @@ import HomeRoundedIcon from "@material-ui/icons/HomeRounded";
 import AddCircleOutlineRoundedIcon from "@material-ui/icons/AddCircleOutlineRounded";
 import FavoriteBorderRoundedIcon from "@material-ui/icons/FavoriteBorderRounded";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { useState } from "react";
 import {
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
   Divider,
 } from "@chakra-ui/react";
+import { createStyles, makeStyles, Modal, Theme } from "@material-ui/core";
+import NewPostIndex from "./NewPostIndex";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    modal: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+  })
+);
 
 export default function Header() {
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <>
       <div className="flex bg-white">
@@ -33,28 +50,37 @@ export default function Header() {
           <a href="/">
             <HomeRoundedIcon className="mx-4 hover:cursor-pointer" />
           </a>
-          <a className="no-underline" href="/component">
+          <a className="no-underline" onClick={handleOpen}>
             <AddCircleOutlineRoundedIcon className="mx-4 hover:cursor-pointer" />
           </a>
-          <a href="">
+          <a href="/component">
             <FavoriteBorderRoundedIcon className="mx-4 hover:cursor-pointer" />
           </a>
+          <Modal
+            className={classes.modal}
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+          >
+            <NewPostIndex />
+          </Modal>
 
           <Menu>
             <MenuButton>
               <AccountCircleIcon className="mx-4 hover:cursor-pointer" />
             </MenuButton>
             <MenuList className="block bg-white border border-gray-400 rounded-lg px-4 py-1 w-32">
-              <MenuItem className="mt-1 font-extralight text-xs">
+              <MenuItem className="mt-1 font-extralight text-xs hover:text-pink-500">
                 <a href="/mypage">Profile</a>
               </MenuItem>
               <br />
-              <MenuItem className="mt-1 font-extralight text-xs">
+              <MenuItem className="mt-1 font-extralight text-xs hover:text-pink-500">
                 Settings
               </MenuItem>
               <br />
               <Divider className="mt-1" />
-              <MenuItem className="my-1 font-extralight text-xs">
+              <MenuItem className="my-1 font-extralight text-xs hover:text-pink-500">
                 <a href="/login">Log Out</a>
               </MenuItem>
             </MenuList>
