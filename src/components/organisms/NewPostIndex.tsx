@@ -3,13 +3,11 @@ import {
   createStyles,
   Divider,
   makeStyles,
-  TextField,
   Theme,
 } from "@material-ui/core";
 import KeyboardBackspaceRoundedIcon from "@material-ui/icons/KeyboardBackspaceRounded";
 import { ChangeEvent, useState } from "react";
 import dummyPhoto from "../../assets/images/dummy-photo.png";
-import miso from "../../assets/images/miso.png";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { Textarea } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
@@ -27,10 +25,6 @@ const useStyles = makeStyles((theme: Theme) =>
     postButton: {
       color: "#ff1493",
       fontWeight: "bold",
-    },
-    textField: {
-      fontSize: "xs",
-      marginTop: 4,
     },
   })
 );
