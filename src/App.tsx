@@ -6,6 +6,7 @@ import Components from "./components/pages/Components";
 import MyPage from "./components/pages/MyPage";
 import TopPage from "./components/pages/TopPage";
 import Login from "./components/pages/Login";
+import { NotFoundPage } from "./components/pages/NotFoundPage";
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
         <Route path={"/signup"} element={<SignUp />} />
         <Route path={"/login"} element={<Login />} />
         <Route path={"/component"} element={<Components />} />
-        <Route path={"/mypage"} element={<MyPage />} />
+        <Route path={"/profile"} element={<MyPage />} />
+        <Route path={"/*"} element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
