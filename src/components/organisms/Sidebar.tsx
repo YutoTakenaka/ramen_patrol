@@ -3,6 +3,7 @@ import AddCircleOutlineRoundedIcon from "@material-ui/icons/AddCircleOutlineRoun
 import FavoriteBorderRoundedIcon from "@material-ui/icons/FavoriteBorderRounded";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
+import AssignmentReturnRoundedIcon from "@material-ui/icons/AssignmentReturnRounded";
 import { useNavigate } from "react-router-dom";
 
 export const SideBar = () => {
@@ -13,6 +14,7 @@ export const SideBar = () => {
   const onClickCreate = () => navigate("/create");
   const onClickFavorite = () => navigate("/component");
   const onClickProfile = () => navigate("/profile");
+  const onClickLogout = () => navigate("/login");
 
   const sideMenu = [
     { icon: <HomeRoundedIcon />, label: "Home", onClick: onClickHome },
@@ -28,6 +30,11 @@ export const SideBar = () => {
       onClick: onClickFavorite,
     },
     { icon: <AccountCircleIcon />, label: "Profile", onClick: onClickProfile },
+    {
+      icon: <AssignmentReturnRoundedIcon />,
+      label: "Logout",
+      onClick: onClickLogout,
+    },
   ];
 
   return (

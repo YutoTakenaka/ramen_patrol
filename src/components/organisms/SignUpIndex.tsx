@@ -14,11 +14,11 @@ export default function SignUpIndex() {
     navigate("/");
   };
   return (
-    <div className="bg-gray-50 w-full pb-32 pt-16">
+    <div className="bg-gray-50 w-full pt-32 flex-1">
       <div className="bg-white border border-gray-200 w-2/5 mx-auto rounded-lg">
-        <p className="font-bold bg-gradient-to-br from-pink-500 to-yellow-500 h-26 text-center text-white text-4xl bg-clip-text text-transparent mt-8">
+        <h1 className="font-bold bg-gradient-to-br from-pink-500 to-yellow-500 h-26 text-center text-white text-4xl bg-clip-text text-transparent mt-8">
           Ramen Patrol
-        </p>
+        </h1>
         <p className="text-center text-gray-400 text-sm mt-8 w-3/4 mx-auto">
           Sign up to see Ramen and videos from your friends.
         </p>
@@ -45,6 +45,17 @@ export default function SignUpIndex() {
             </div>
           </PrimaryButton>
         </div>
+        <p className="text-center text-gray-400 text-sm mb-8 w-3/4 mx-auto">
+          Have an account?{" "}
+          <span>
+            <a
+              className="font-semibold text-blue-500 hover:text-blue-400"
+              href="/login"
+            >
+              Log in
+            </a>
+          </span>
+        </p>
       </div>
     </div>
   );
