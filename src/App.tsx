@@ -8,6 +8,7 @@ import TopPage from "./components/pages/TopPage";
 import Login from "./components/pages/Login";
 import { NotFoundPage } from "./components/pages/NotFoundPage";
 import { CreatePage } from "./components/pages/CreatePage";
+import { EditPage } from "./components/pages/EditPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path={"/component"} element={<Components />} />
         <Route path={"/profile"} element={<MyPage />} />
         <Route path={"/create"} element={<CreatePage />} />
+        <Route path={"/edit"} element={<EditPage />} />
         <Route path={"/*"} element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
