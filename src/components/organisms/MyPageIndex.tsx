@@ -40,72 +40,70 @@ export default function MyPageIndex() {
     setValue(newValue);
   };
   return (
-    <>
-      <div className="bg-gray-50">
-        <div className="flex justify-center">
-          <AccountCircleIcon className="mr-12 mt-8" style={{ fontSize: 160 }} />
-          <div>
-            <div className="w-full flex ml-12 items-center mt-20">
-              <p className="text-xl">Takenaka Yuto</p>
-              <a href="">
-                <button
-                  className="border border-gray-200 rounded-lg px-2 py-1 text-sm mx-4 hover:bg-gray-200"
-                  type="button"
-                >
-                  Edit profile
-                </button>
-              </a>
-              <SettingsIcon className="hover:cursor-pointer" />
-            </div>
-            <p className="text-center mt-4">
-              <span className="text-lg mr-2">123</span>patrols
-            </p>
+    <div className="bg-gray-50">
+      <div className="flex justify-center">
+        <AccountCircleIcon className="mr-12 mt-8" style={{ fontSize: 160 }} />
+        <div>
+          <div className="w-full flex ml-12 items-center mt-20">
+            <p className="text-xl">Takenaka Yuto</p>
+            <a href="">
+              <button
+                className="border border-gray-200 rounded-lg px-2 py-1 text-sm mx-4 hover:bg-gray-200"
+                type="button"
+              >
+                Edit profile
+              </button>
+            </a>
+            <SettingsIcon className="hover:cursor-pointer" />
           </div>
-        </div>
-        {/* <TabList className="border-b border-gray-300 w-4/5"> */}
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="secondary"
-          textColor="secondary"
-          centered
-          className="bg-gray-50 my-4"
-        >
-          <Tab label="Posts" />
-          <Tab label="saved" />
-          <Tab label="likes" />
-        </Tabs>
-        <div className="mx-auto w-full flex justify-center pb-4">
-          <TabPanel value={value} index={0}>
-            <div className="flex justify-start flex-wrap w-11/12 mx-auto">
-              <img className="w-64 h-64 m-4" src={tori} alt="" />
-              <img className="w-64 h-64 m-4" src={tori} alt="" />
-              <img className="w-64 h-64 m-4" src={tori} alt="" />
-              <img className="w-64 h-64 m-4" src={tori} alt="" />
-              <img className="w-64 h-64 m-4" src={tori} alt="" />
-              <img className="w-64 h-64 m-4" src={tori} alt="" />
-              <img className="w-64 h-64 m-4" src={tori} alt="" />
-            </div>
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <div className="flex justify-start flex-wrap w-11/12 mx-auto">
-              <img className="w-64 h-64 m-4" src={miso} alt="" />
-              <img className="w-64 h-64 m-4" src={miso} alt="" />
-              <img className="w-64 h-64 m-4" src={miso} alt="" />
-              <img className="w-64 h-64 m-4" src={miso} alt="" />
-              <img className="w-64 h-64 m-4" src={miso} alt="" />
-            </div>
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            <div className="flex justify-start flex-wrap w-11/12 mx-auto">
-              <img className="w-64 h-64 m-4" src={serori} alt="" />
-              <img className="w-64 h-64 m-4" src={serori} alt="" />
-              <img className="w-64 h-64 m-4" src={serori} alt="" />
-              <img className="w-64 h-64 m-4" src={serori} alt="" />
-            </div>
-          </TabPanel>
+          <p className="text-center mt-4">
+            <span className="text-lg mr-2">123</span>patrols
+          </p>
         </div>
       </div>
-    </>
+      {/* <TabList className="border-b border-gray-300 w-4/5"> */}
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        indicatorColor="secondary"
+        textColor="secondary"
+        centered
+        className="bg-gray-50 my-4"
+      >
+        <Tab label="Posts" />
+        <Tab label="saved" />
+        <Tab label="likes" />
+      </Tabs>
+      <div className="pb-4 ml-10 mt-16">
+        <TabPanel value={value} index={0}>
+          <div className="flex justify-start gap-16 flex-wrap m-auto w-11/12">
+            <img className="w-64 h-64" src={tori} alt="" />
+            <img className="w-64 h-64" src={tori} alt="" />
+            <img className="w-64 h-64" src={tori} alt="" />
+            <img className="w-64 h-64" src={tori} alt="" />
+            <img className="w-64 h-64" src={tori} alt="" />
+            <img className="w-64 h-64" src={tori} alt="" />
+            <img className="w-64 h-64" src={tori} alt="" />
+          </div>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <div className="flex justify-start gap-16 flex-wrap w-11/12 mx-auto">
+            <img className="w-64 h-64" src={miso} alt="" />
+            <img className="w-64 h-64" src={miso} alt="" />
+            <img className="w-64 h-64" src={miso} alt="" />
+            <img className="w-64 h-64" src={miso} alt="" />
+            <img className="w-64 h-64" src={miso} alt="" />
+          </div>
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <div className="flex justify-start gap-16 flex-wrap w-11/12 mx-auto">
+            <img className="w-64 h-64" src={serori} alt="" />
+            <img className="w-64 h-64" src={serori} alt="" />
+            <img className="w-64 h-64" src={serori} alt="" />
+            <img className="w-64 h-64" src={serori} alt="" />
+          </div>
+        </TabPanel>
+      </div>
+    </div>
   );
 }

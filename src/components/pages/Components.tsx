@@ -1,4 +1,4 @@
-import { MenuItem, RadioGroup } from "@material-ui/core";
+import { RadioGroup } from "@material-ui/core";
 import React from "react";
 import PrimaryButton from "../molecules/buttons/PrimaryButton";
 import SecondaryButton from "../molecules/buttons/SecondaryButton";
@@ -8,8 +8,7 @@ import RadioButton from "../molecules/inputs/RadioButton";
 import SelectBox from "../molecules/inputs/SelectBox";
 import SwitchButton from "../molecules/inputs/Switch";
 import TextBox from "../molecules/inputs/TextField";
-import Footer from "../organisms/Footer";
-import Header from "../organisms/Header";
+import { Layout } from "../organisms/Layout";
 
 const SELECT_ITEMS = [
   "1",
@@ -32,8 +31,7 @@ export default function Components() {
   };
 
   return (
-    <>
-      <Header />
+    <Layout>
       <ComponentBox>
         <p>Primary Button</p>
         <PrimaryButton onClick={onClickBtn}>
@@ -92,7 +90,6 @@ export default function Components() {
         <br />
         <TextBox label="Birthday" required={false} disabled={true} />
       </ComponentBox>
-      <Footer />
-    </>
+    </Layout>
   );
 }
