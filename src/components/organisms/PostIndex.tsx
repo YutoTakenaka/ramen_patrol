@@ -9,6 +9,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function PostIndex() {
   const classes = useStyles();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [like, setLike] = useState(false);
   const handleOpen = () => {
@@ -48,29 +50,42 @@ export default function PostIndex() {
   };
   const body = (
     <div className={classes.paper}>
-      <div>
-        <p className="text-red-500 text-sm font-bold my-3 text-center">
+      <ul>
+        <li className="text-red-500 text-sm font-bold my-3 text-center">
           Report
-        </p>
+        </li>
         <hr className="w-80" />
-        <p className="text-red-500 text-sm font-bold my-3 text-center">
+        <li className="text-red-500 text-sm font-bold my-3 text-center">
           Unfollow
-        </p>
+        </li>
         <hr className="w-80" />
-        <p className="text-sm my-3 text-center">Add to favorites</p>
+        <li className="text-sm my-3 text-center">Add to favorites</li>
         <hr className="w-80" />
-        <p className="text-sm my-3 text-center">Go to post</p>
+        <li
+          className="text-sm my-3 text-center"
+          onClick={() => navigate("/profile")}
+        >
+          Go to post
+        </li>
         <hr className="w-80" />
-        <p className="text-sm my-3 text-center">Copy link</p>
+        <li
+          className="text-sm my-3 text-center"
+          onClick={() => navigate("/edit")}
+        >
+          Edit
+        </li>
         <hr className="w-80" />
-        <p className="text-sm my-3 text-center">Share to...</p>
+        <li
+          className="text-sm my-3 text-center"
+          onClick={() => navigate("/profile")}
+        >
+          Go to profile
+        </li>
         <hr className="w-80" />
-        <p className="text-sm my-3 text-center">Go to profile</p>
-        <hr className="w-80" />
-        <div className="text-sm my-3 text-center" onClick={handleClose}>
+        <li className="text-sm my-3 text-center" onClick={handleClose}>
           Cancel
-        </div>
-      </div>
+        </li>
+      </ul>
     </div>
   );
 
@@ -83,12 +98,12 @@ export default function PostIndex() {
             <AccountCircleIcon />
             <p className="text-sm ml-2">takenaka_yuto</p>
           </a>
-          <div
+          <button
             className="text-sm hover:opacity-50 hover:cursor-pointer"
             onClick={handleOpen}
           >
             ･･･
-          </div>
+          </button>
         </div>
         <Modal
           className={classes.modal}
