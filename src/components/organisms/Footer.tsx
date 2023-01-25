@@ -13,7 +13,7 @@ const FOOTER_ITEMS = [
 
 export default function Footer() {
   return (
-    <div className="bg-gray-50 h-32">
+    <footer className="bg-gray-50 h-32 bottom-0">
       <div className="w-4/5 mx-auto">
         <div className="flex justify-around mx-auto pt-8 text-xs text-gray-500 font-light">
           {FOOTER_ITEMS.map((item) => (
@@ -26,6 +26,6 @@ export default function Footer() {
           <p>©2022 Ramen Patrol from Takenaka Yuto</p>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }
