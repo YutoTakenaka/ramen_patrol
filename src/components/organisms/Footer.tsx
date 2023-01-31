@@ -17,7 +17,7 @@ export default function Footer() {
       <div className="w-4/5 mx-auto">
         <div className="flex justify-around mx-auto pt-8 text-xs text-gray-500 font-light">
           {FOOTER_ITEMS.map((item) => (
-            <a className="hover:underline" href={item.href}>
+            <a className="hover:underline" href={item.href} key={item.item}>
               {item.item}
             </a>
           ))}

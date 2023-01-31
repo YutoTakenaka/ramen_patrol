@@ -34,11 +34,20 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function PostIndex() {
+type Props = {
+  image: string;
+  caption?: string;
+  location?: string;
+  userId: number;
+};
+
+export default function PostIndex({ image, caption, location, userId }: Props) {
   const classes = useStyles();
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-  const [like, setLike] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
+  const [like, setLike] = useState<boolean>(false);
+  const [showAllCaption, setShowAllCaption] = useState<boolean>(false);
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -94,9 +103,12 @@ export default function PostIndex() {
       <div className="bg-white border-2 border-gray-100 rounded-lg w-fit">
         {/* header */}
         <div className="flex justify-between items-center p-2">
-          <a href="/mypage" className="flex items-center">
+          <a href="/profile" className="flex items-center">
             <AccountCircleIcon />
-            <p className="text-sm ml-2">takenaka_yuto</p>
+            <div className="ml-2">
+              <p className="text-sm">takenaka_yuto{userId}</p>
+              <p className="text-xs text-gray-500">{location}</p>
+            </div>
           </a>
           <button
             className="text-sm hover:opacity-50 hover:cursor-pointer"
@@ -105,6 +117,7 @@ export default function PostIndex() {
             ･･･
           </button>
         </div>
+
         <Modal
           className={classes.modal}
           open={open}
@@ -124,7 +137,7 @@ export default function PostIndex() {
             showStatus={false}
           >
             <img src={ramenImg} alt="" />
-            <img src={ramenImg} alt="" />
+            <img src={image} alt="" />
             <img src={ramenImg} alt="" />
           </Carousel>
           <div className="flex w-96 my-2 justify-between">
@@ -152,9 +165,32 @@ export default function PostIndex() {
         {/* caption */}
         <div className="m-2">
           <div className="flex">
-            <p className="font-bold">takenaka_yuto</p>
-            <p className="ml-2">This Ramen is ...</p>
-            <p className="text-gray-400 hover:cursor-pointer">more</p>
+            <p className="font-bold">takenaka_yuto{userId}</p>
+            {!!caption && caption?.length >= 10 ? (
+              !showAllCaption ? (
+                <>
+                  <p className="ml-2">{caption.substring(0, 10)}...</p>
+                  <button
+                    className="ml-2 text-gray-400 hover:cursor-pointer"
+                    onClick={() => setShowAllCaption(true)}
+                  >
+                    more
+                  </button>
+                </>
+              ) : (
+                <>
+                  <p className="ml-2">{caption}</p>
+                  <button
+                    className="ml-2 text-gray-400 hover:cursor-pointer"
+                    onClick={() => setShowAllCaption(false)}
+                  >
+                    close
+                  </button>
+                </>
+              )
+            ) : (
+              <p className="ml-2">{caption}</p>
+            )}
           </div>
           <p className="text-gray-400 mb-4 hover:cursor-pointer">
             View all comments
