@@ -164,12 +164,12 @@ export default function PostIndex({ image, caption, location, userId }: Props) {
         </div>
         {/* caption */}
         <div className="m-2">
+          <p className="font-bold">takenaka_yuto{userId}</p>
           <div className="flex">
-            <p className="font-bold">takenaka_yuto{userId}</p>
-            {!!caption && caption?.length >= 10 ? (
+            {!!caption && caption?.length >= 20 ? (
               !showAllCaption ? (
                 <>
-                  <p className="ml-2">{caption.substring(0, 10)}...</p>
+                  <p>{caption.substring(0, 20)}...</p>
                   <button
                     className="ml-2 text-gray-400 hover:cursor-pointer"
                     onClick={() => setShowAllCaption(true)}
@@ -178,20 +178,21 @@ export default function PostIndex({ image, caption, location, userId }: Props) {
                   </button>
                 </>
               ) : (
-                <>
-                  <p className="ml-2">{caption}</p>
+                <div className="flex flex-col w-full">
+                  <p className="w-full max-w-[368px]">{caption}</p>
                   <button
-                    className="ml-2 text-gray-400 hover:cursor-pointer"
+                    className="text-gray-400 hover:cursor-pointer text-right"
                     onClick={() => setShowAllCaption(false)}
                   >
                     close
                   </button>
-                </>
+                </div>
               )
             ) : (
-              <p className="ml-2">{caption}</p>
+              <p>{caption}</p>
             )}
           </div>
+
           <p className="text-gray-400 mb-4 hover:cursor-pointer">
             View all comments
           </p>
