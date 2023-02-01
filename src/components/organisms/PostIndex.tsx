@@ -6,10 +6,11 @@ import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import { Button, Modal } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../services/api";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,9 +40,16 @@ type Props = {
   caption?: string;
   location?: string;
   userId: number;
+  postId: number;
 };
 
-export default function PostIndex({ image, caption, location, userId }: Props) {
+export default function PostIndex({
+  image,
+  caption,
+  location,
+  userId,
+  postId,
+}: Props) {
   const classes = useStyles();
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
@@ -57,6 +65,23 @@ export default function PostIndex({ image, caption, location, userId }: Props) {
   const onClickLike = () => {
     like ? setLike(false) : setLike(true);
   };
+
+  const onClickDelete = useCallback(() => {
+    if (window.confirm("本当に削除しますか？")) {
+      api
+        .post(`/delete_post/${postId}`)
+        .then(() => {
+          setOpen(false);
+          window.location.reload();
+        })
+        .catch((error) => {
+          alert(error);
+          setOpen(false);
+          console.error(error);
+        });
+    }
+  }, []);
+
   const body = (
     <div className={classes.paper}>
       <ul>
@@ -74,7 +99,7 @@ export default function PostIndex({ image, caption, location, userId }: Props) {
           className="text-sm my-3 text-center"
           onClick={() => navigate("/profile")}
         >
-          Go to post
+          Go to profile
         </li>
         <hr className="w-80" />
         <li
@@ -86,9 +111,9 @@ export default function PostIndex({ image, caption, location, userId }: Props) {
         <hr className="w-80" />
         <li
           className="text-sm my-3 text-center"
-          onClick={() => navigate("/profile")}
+          onClick={() => onClickDelete()}
         >
-          Go to profile
+          Delete
         </li>
         <hr className="w-80" />
         <li className="text-sm my-3 text-center" onClick={handleClose}>
@@ -102,7 +127,7 @@ export default function PostIndex({ image, caption, location, userId }: Props) {
     <div className="md:flex md:justify-evenly p-4">
       <div className="bg-white border-2 border-gray-100 rounded-lg w-fit">
         {/* header */}
-        <div className="flex justify-between items-center p-2">
+        <header className="flex justify-between items-center p-2">
           <a href="/profile" className="flex items-center">
             <AccountCircleIcon />
             <div className="ml-2">
@@ -116,17 +141,7 @@ export default function PostIndex({ image, caption, location, userId }: Props) {
           >
             ･･･
           </button>
-        </div>
-
-        <Modal
-          className={classes.modal}
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          {body}
-        </Modal>
+        </header>
         {/* img */}
         <div className="w-96 bg-white ">
           <Carousel
@@ -211,6 +226,15 @@ export default function PostIndex({ image, caption, location, userId }: Props) {
           <Button className={classes.postButton}>Post</Button>
         </div>
       </div>
+      <Modal
+        className={classes.modal}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {body}
+      </Modal>
     </div>
   );
 }

@@ -26,6 +26,7 @@ export default function TopPage() {
             caption={post.caption}
             location={post.location}
             userId={post.user_id}
+            postId={post.post_id}
           />
         </div>
       ))}
