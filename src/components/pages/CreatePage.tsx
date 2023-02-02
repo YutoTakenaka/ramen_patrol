@@ -21,6 +21,7 @@ export const CreatePage = () => {
   const navigate = useNavigate();
   const [caption, setCaption] = useState<string>("");
   const [location, setLocation] = useState<string>("");
+  // @todo imageの型をファイル型に修正する
   const [file, setFile] = useState<string | Blob>("");
   const [fileName, setFileName] = useState<string>("");
 
@@ -39,15 +40,10 @@ export const CreatePage = () => {
   };
 
   const onClickCreate = async () => {
-    console.log(caption);
-    console.log(location);
-    console.log(fileName);
     // const formData: FormData = new FormData();
     // formData.append("file", file);
     // formData.append("fileName", fileName);
     // console.log(formData);
-    // 新規投稿APIを叩く
-    // 引数にキャプションと場所と写真を指定してリクエスト送信
     await api
       .post("/create_post", {
         image: fileName,

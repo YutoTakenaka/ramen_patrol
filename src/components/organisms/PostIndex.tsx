@@ -104,7 +104,7 @@ export default function PostIndex({
         <hr className="w-80" />
         <li
           className="text-sm my-3 text-center"
-          onClick={() => navigate("/edit")}
+          onClick={() => navigate(`/edit/${postId}`)}
         >
           Edit
         </li>

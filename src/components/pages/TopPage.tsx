@@ -6,7 +6,6 @@ import PostIndex from "../organisms/PostIndex";
 
 export default function TopPage() {
   const [postData, setPostData] = useState<TPost[]>([]);
-  const [srcList, setSrcList] = useState<string[]>([]);
   useEffect(() => {
     const getPostsAll = async () => {
       const response = await api.get("/get_posts_all");
