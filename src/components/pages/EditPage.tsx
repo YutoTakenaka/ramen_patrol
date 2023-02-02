@@ -1,6 +1,6 @@
 import { Layout } from "../organisms/Layout";
 import { Divider } from "@material-ui/core";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import dummyPhoto from "../../assets/images/dummy-photo.png";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { Textarea } from "@chakra-ui/react";
@@ -14,18 +14,36 @@ import {
 } from "@chakra-ui/react";
 import SwitchButton from "../molecules/inputs/Switch";
 import PrimaryButton from "../molecules/buttons/PrimaryButton";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { api } from "../../services/api";
+import { TPost } from "../../types/types";
 
 export const EditPage = () => {
   const navigate = useNavigate();
+  const params = useParams();
+  // @todo キャプション、場所、ファイルの初期値を投稿データから引っ張ってきて指定する。
   const [caption, setCaption] = useState<string>("");
   const [location, setLocation] = useState<string>("");
-  const [file, setFile] = useState<File | null>(null);
+  // @todo imageの型をファイル型に修正する
+  const [file, setFile] = useState<string | Blob>("");
+  const [fileName, setFileName] = useState<string>("");
+  const [targetPost, setTargetPost] = useState<TPost>();
+  const postId = params.id as string;
+  useEffect(() => {
+    const getPost = async () => {
+      const response = await api.get(`/get_post/${postId}`);
+      setTargetPost(response.data);
+      return response;
+    };
+    getPost();
+  }, []);
+  console.log(targetPost);
 
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files[0]) {
       setFile(files[0]);
+      setFileName(files[0].name);
     }
   };
   const handleChangeCaption = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -35,14 +53,17 @@ export const EditPage = () => {
     setLocation(e.target.value);
   };
 
-  const onClickEdit = () => {
-    console.log(caption);
-    console.log(location);
-    console.log(file);
-    // 新規投稿APIを叩く
-    // 引数にキャプションと場所と写真を指定してリクエスト送信
-    // ＠処理
-    navigate("/");
+  const onClickEdit = async () => {
+    await api
+      .post(`/edit_post/${postId}`, {
+        post_id: postId,
+        image: fileName,
+        caption,
+        location,
+        user_id: targetPost?.user_id,
+      })
+      .then(() => navigate("/"))
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -60,6 +81,7 @@ export const EditPage = () => {
                 {/* <button className="py-1 px-8 mt-8 bg-pink-500 text-white text-center rounded-md hover:opacity-80 text-xs">
                     Select from computer
                   </button> */}
+                {/* @todo 初期値として画像のプレビューを投稿データから引っ張ってきて指定する。 */}
                 <input
                   type="file"
                   accept="image/*"
@@ -79,22 +101,27 @@ export const EditPage = () => {
             </div>
             <div className="flex h-4/5">
               <div className="w-1/2 font-light text-xs text-gray-400 h-full m-2">
+                {/* @todo キャプションの初期値を投稿データから引っ張ってきて指定する。 */}
                 <Textarea
                   value={caption}
                   onChange={(e) => handleChangeCaption(e)}
-                  placeholder="Write a caption...   "
-                  className="w-full h-full text-black p-1 "
+                  placeholder="Write a caption..."
+                  className="w-full h-full text-black p-1"
                   colorScheme="pink"
                   variant="filled"
+                  defaultValue={targetPost?.caption}
+                  size="lg"
                 />
               </div>
               <div className="w-1/2 m-2">
+                {/* @todo 場所の初期値を投稿データから引っ張ってきて指定する。 */}
                 <Input
                   placeholder="Add location"
                   size="xs"
                   variant="unstyled"
                   className="font-light text-xs text-gray-500 my-2 py-1 pl-1 w-full"
                   value={location}
+                  defaultValue={targetPost?.location}
                   onChange={(e) => handleChangeLocation(e)}
                 />
                 <Divider />

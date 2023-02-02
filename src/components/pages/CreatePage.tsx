@@ -1,6 +1,6 @@
 import { Layout } from "../organisms/Layout";
 import { Divider } from "@material-ui/core";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import dummyPhoto from "../../assets/images/dummy-photo.png";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { Textarea } from "@chakra-ui/react";
@@ -15,17 +15,21 @@ import {
 import SwitchButton from "../molecules/inputs/Switch";
 import PrimaryButton from "../molecules/buttons/PrimaryButton";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../services/api";
 
 export const CreatePage = () => {
   const navigate = useNavigate();
   const [caption, setCaption] = useState<string>("");
   const [location, setLocation] = useState<string>("");
-  const [file, setFile] = useState<File | null>(null);
+  // @todo imageの型をファイル型に修正する
+  const [file, setFile] = useState<string | Blob>("");
+  const [fileName, setFileName] = useState<string>("");
 
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files[0]) {
       setFile(files[0]);
+      setFileName(files[0].name);
     }
   };
   const handleChangeCaption = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -35,14 +39,20 @@ export const CreatePage = () => {
     setLocation(e.target.value);
   };
 
-  const onClickPost = () => {
-    console.log(caption);
-    console.log(location);
-    console.log(file);
-    // 新規投稿APIを叩く
-    // 引数にキャプションと場所と写真を指定してリクエスト送信
-    // ＠処理
-    navigate("/");
+  const onClickCreate = async () => {
+    // const formData: FormData = new FormData();
+    // formData.append("file", file);
+    // formData.append("fileName", fileName);
+    // console.log(formData);
+    await api
+      .post("/create_post", {
+        image: fileName,
+        caption,
+        location,
+        user_id: 1,
+      })
+      .then(() => navigate("/"))
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -139,7 +149,7 @@ export const CreatePage = () => {
           </div>
         </div>
         <div className="w-11/12 m-auto flex justify-end">
-          <PrimaryButton onClick={onClickPost} disabled={!file}>
+          <PrimaryButton onClick={onClickCreate} disabled={!file}>
             <div className="h-8 w-32 text-sm flex items-center justify-center hover:cursor-pointer">
               <p className="text-white ">create</p>
             </div>

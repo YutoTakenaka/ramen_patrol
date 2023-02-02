@@ -20,7 +20,7 @@ function App() {
         <Route path={"/component"} element={<Components />} />
         <Route path={"/profile"} element={<MyPage />} />
         <Route path={"/create"} element={<CreatePage />} />
-        <Route path={"/edit"} element={<EditPage />} />
+        <Route path={"/edit/:id"} element={<EditPage />} />
         <Route path={"/*"} element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
