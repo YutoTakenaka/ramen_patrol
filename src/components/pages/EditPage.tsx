@@ -37,7 +37,6 @@ export const EditPage = () => {
     };
     getPost();
   }, []);
-  console.log(targetPost);
 
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;

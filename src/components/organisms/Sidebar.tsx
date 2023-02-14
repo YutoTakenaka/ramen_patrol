@@ -5,37 +5,83 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
 import AssignmentReturnRoundedIcon from "@material-ui/icons/AssignmentReturnRounded";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../providers/useAuth";
 
 export const SideBar = () => {
   const navigate = useNavigate();
+  const { logout, token, loginUser } = useAuth();
+  console.log(token);
 
   const onClickHome = () => navigate("/");
+
   const onClickSearch = () => {};
-  const onClickCreate = () => navigate("/create");
-  const onClickFavorite = () => navigate("/component");
-  const onClickProfile = () => navigate("/profile");
-  const onClickLogout = () => navigate("/login");
+
+  const onClickCreate = () => {
+    if (!token) {
+      navigate("/login");
+    } else {
+      navigate("/create");
+    }
+  };
+  const onClickFavorite = () => {
+    if (!token) {
+      navigate("/login");
+    } else {
+      navigate("/component");
+    }
+  };
+  const onClickProfile = () => {
+    if (!token) {
+      navigate("/login");
+    } else {
+      navigate("/profile");
+    }
+  };
+  const onClickLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   const sideMenu = [
-    { icon: <HomeRoundedIcon />, label: "Home", onClick: onClickHome },
-    { icon: <SearchIcon />, label: "Search", onClick: onClickSearch },
     {
+      id: "home",
+      icon: <HomeRoundedIcon />,
+      label: "Home",
+      onClick: onClickHome,
+    },
+    {
+      id: "search",
+      icon: <SearchIcon />,
+      label: "Search",
+      onClick: onClickSearch,
+    },
+    {
+      id: "create",
       icon: <AddCircleOutlineRoundedIcon />,
       label: "Create",
       onClick: onClickCreate,
     },
     {
+      id: "favorite",
       icon: <FavoriteBorderRoundedIcon />,
       label: "Favorite",
       onClick: onClickFavorite,
     },
-    { icon: <AccountCircleIcon />, label: "Profile", onClick: onClickProfile },
     {
+      id: "profile",
+      icon: <AccountCircleIcon />,
+      label: `${loginUser?.username}`,
+      onClick: onClickProfile,
+    },
+    {
+      id: "logout",
       icon: <AssignmentReturnRoundedIcon />,
       label: "Logout",
       onClick: onClickLogout,
     },
   ];
+
+  const noUserSideMenu = sideMenu.filter((menu) => menu.id !== "profile");
 
   return (
     <div className="w-52 min-w-min bg-white border-r fixed h-screen">
@@ -43,16 +89,27 @@ export const SideBar = () => {
         <a href="/">Ramen Patrol</a>
       </p>
       <ul>
-        {sideMenu.map(({ icon, label, onClick }) => (
-          <li
-            className="flex items-center mt-4 justify-start w-4/5 m-auto py-2 hover:font-bold hover:cursor-pointer"
-            key={label}
-            onClick={onClick}
-          >
-            <div>{icon}</div>
-            <p className="ml-2">{label}</p>
-          </li>
-        ))}
+        {loginUser
+          ? sideMenu.map(({ icon, label, onClick }) => (
+              <li
+                className="flex items-center mt-4 justify-start w-4/5 m-auto py-2 hover:font-bold hover:cursor-pointer"
+                key={label}
+                onClick={onClick}
+              >
+                <div>{icon}</div>
+                <p className="ml-2">{label}</p>
+              </li>
+            ))
+          : noUserSideMenu.map(({ icon, label, onClick }) => (
+              <li
+                className="flex items-center mt-4 justify-start w-4/5 m-auto py-2 hover:font-bold hover:cursor-pointer"
+                key={label}
+                onClick={onClick}
+              >
+                <div>{icon}</div>
+                <p className="ml-2">{label}</p>
+              </li>
+            ))}
       </ul>
     </div>
   );

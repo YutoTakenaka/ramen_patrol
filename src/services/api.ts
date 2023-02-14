@@ -7,6 +7,12 @@ export const api = axios.create({
   },
 });
 
+// 認証用のAPIインスタンス
+export const loginApi = axios.create({
+  baseURL: "http://127.0.0.1:8000",
+  headers: { "Content-Type": "application/x-www-form-urlencoded" },
+});
+
 axios.interceptors.request.use(
   (config) => {
     return config;
@@ -39,3 +45,8 @@ axios.interceptors.response.use(
     }
   }
 );
+
+export const setTokenHeader = (token: string): boolean => {
+  api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  return !!token;
+};

@@ -14,7 +14,6 @@ export default function TopPage() {
     };
     getPostsAll();
   }, []);
-  console.log(postData);
 
   return (
     <Layout>

@@ -16,14 +16,17 @@ import SwitchButton from "../molecules/inputs/Switch";
 import PrimaryButton from "../molecules/buttons/PrimaryButton";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
+import { useAuth } from "../../providers/useAuth";
 
 export const CreatePage = () => {
   const navigate = useNavigate();
+  const { token } = useAuth();
   const [caption, setCaption] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   // @todo imageの型をファイル型に修正する
   const [file, setFile] = useState<string | Blob>("");
   const [fileName, setFileName] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -38,23 +41,28 @@ export const CreatePage = () => {
   const handleChangeLocation = (e: ChangeEvent<HTMLInputElement>) => {
     setLocation(e.target.value);
   };
-
   const onClickCreate = async () => {
-    // const formData: FormData = new FormData();
-    // formData.append("file", file);
-    // formData.append("fileName", fileName);
-    // console.log(formData);
-    await api
-      .post("/create_post", {
-        image: fileName,
-        caption,
-        location,
-        user_id: 1,
-      })
-      .then(() => navigate("/"))
-      .catch((error) => console.error(error));
+    if (!token) {
+      setError("ログインする必要があります。");
+      navigate("/login");
+    } else {
+      await api
+        .post("/create_post", {
+          image: fileName,
+          caption,
+          location,
+          user_id: 1,
+        })
+        .then(() => {
+          setError("");
+          navigate("/");
+        })
+        .catch((error) => {
+          setError(error);
+          console.error(error);
+        });
+    }
   };
-
   return (
     <>
       <Layout>
@@ -154,6 +162,9 @@ export const CreatePage = () => {
               <p className="text-white ">create</p>
             </div>
           </PrimaryButton>
+        </div>
+        <div className="w-11/12 m-auto flex justify-end text-lg text-red-600 mt-8 ">
+          <p>{error}</p>
         </div>
       </Layout>
     </>
