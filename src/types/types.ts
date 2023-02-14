@@ -9,3 +9,11 @@ export type TPost = {
   updated_at: string;
   user_id: number;
 };
+
+export type TUser = {
+  user_id?: number;
+  username?: string;
+  access_token?: string;
+};
+
+export type TAuthUser = TUser | null;

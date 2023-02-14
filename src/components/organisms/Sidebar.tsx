@@ -5,16 +5,42 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
 import AssignmentReturnRoundedIcon from "@material-ui/icons/AssignmentReturnRounded";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../providers/useAuth";
 
 export const SideBar = () => {
   const navigate = useNavigate();
+  const { logout, token } = useAuth();
+  console.log(token);
 
   const onClickHome = () => navigate("/");
+
   const onClickSearch = () => {};
-  const onClickCreate = () => navigate("/create");
-  const onClickFavorite = () => navigate("/component");
-  const onClickProfile = () => navigate("/profile");
-  const onClickLogout = () => navigate("/login");
+
+  const onClickCreate = () => {
+    if (!token) {
+      navigate("/login");
+    } else {
+      navigate("/create");
+    }
+  };
+  const onClickFavorite = () => {
+    if (!token) {
+      navigate("/login");
+    } else {
+      navigate("/component");
+    }
+  };
+  const onClickProfile = () => {
+    if (!token) {
+      navigate("/login");
+    } else {
+      navigate("/profile");
+    }
+  };
+  const onClickLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   const sideMenu = [
     { icon: <HomeRoundedIcon />, label: "Home", onClick: onClickHome },
