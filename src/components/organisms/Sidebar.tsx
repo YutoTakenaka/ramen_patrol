@@ -9,7 +9,7 @@ import { useAuth } from "../../providers/useAuth";
 
 export const SideBar = () => {
   const navigate = useNavigate();
-  const { logout, token } = useAuth();
+  const { logout, token, loginUser } = useAuth();
   console.log(token);
 
   const onClickHome = () => navigate("/");
@@ -43,25 +43,45 @@ export const SideBar = () => {
   };
 
   const sideMenu = [
-    { icon: <HomeRoundedIcon />, label: "Home", onClick: onClickHome },
-    { icon: <SearchIcon />, label: "Search", onClick: onClickSearch },
     {
+      id: "home",
+      icon: <HomeRoundedIcon />,
+      label: "Home",
+      onClick: onClickHome,
+    },
+    {
+      id: "search",
+      icon: <SearchIcon />,
+      label: "Search",
+      onClick: onClickSearch,
+    },
+    {
+      id: "create",
       icon: <AddCircleOutlineRoundedIcon />,
       label: "Create",
       onClick: onClickCreate,
     },
     {
+      id: "favorite",
       icon: <FavoriteBorderRoundedIcon />,
       label: "Favorite",
       onClick: onClickFavorite,
     },
-    { icon: <AccountCircleIcon />, label: "Profile", onClick: onClickProfile },
     {
+      id: "profile",
+      icon: <AccountCircleIcon />,
+      label: `${loginUser?.username}`,
+      onClick: onClickProfile,
+    },
+    {
+      id: "logout",
       icon: <AssignmentReturnRoundedIcon />,
       label: "Logout",
       onClick: onClickLogout,
     },
   ];
+
+  const noUserSideMenu = sideMenu.filter((menu) => menu.id !== "profile");
 
   return (
     <div className="w-52 min-w-min bg-white border-r fixed h-screen">
@@ -69,16 +89,27 @@ export const SideBar = () => {
         <a href="/">Ramen Patrol</a>
       </p>
       <ul>
-        {sideMenu.map(({ icon, label, onClick }) => (
-          <li
-            className="flex items-center mt-4 justify-start w-4/5 m-auto py-2 hover:font-bold hover:cursor-pointer"
-            key={label}
-            onClick={onClick}
-          >
-            <div>{icon}</div>
-            <p className="ml-2">{label}</p>
-          </li>
-        ))}
+        {loginUser
+          ? sideMenu.map(({ icon, label, onClick }) => (
+              <li
+                className="flex items-center mt-4 justify-start w-4/5 m-auto py-2 hover:font-bold hover:cursor-pointer"
+                key={label}
+                onClick={onClick}
+              >
+                <div>{icon}</div>
+                <p className="ml-2">{label}</p>
+              </li>
+            ))
+          : noUserSideMenu.map(({ icon, label, onClick }) => (
+              <li
+                className="flex items-center mt-4 justify-start w-4/5 m-auto py-2 hover:font-bold hover:cursor-pointer"
+                key={label}
+                onClick={onClick}
+              >
+                <div>{icon}</div>
+                <p className="ml-2">{label}</p>
+              </li>
+            ))}
       </ul>
     </div>
   );

@@ -26,7 +26,12 @@ export default function LoginIndex() {
         setTokenHeader(jwtToken);
         setAuthenticate(jwtToken);
         setLoginUser((prev: TAuthUser) => {
-          return { ...prev, access_token: jwtToken };
+          return {
+            ...prev,
+            user_id: response.data.user_id,
+            username: response.data.username,
+            access_token: jwtToken,
+          };
         });
         setErrorMessage("");
         navigate("/");
@@ -70,6 +75,13 @@ export default function LoginIndex() {
             </div>
           ))}
         </div>
+        <div className="text-center mt-8 mb-8">
+          <PrimaryButton onClick={onClickLogin}>
+            <div className="h-8 w-32 text-sm flex items-center justify-center">
+              <p className="text-white">Log In</p>
+            </div>
+          </PrimaryButton>
+        </div>
         <p className="text-center text-gray-500 text-sm my-8 w-3/4 mx-auto">
           If you don't have any accounts ,<br />
           <span className="font-semibold text-blue-500 hover:text-blue-400">
@@ -77,13 +89,6 @@ export default function LoginIndex() {
           </span>{" "}
           to patrol Ramen !
         </p>
-        <div className="text-center mt-4 mb-8">
-          <PrimaryButton onClick={onClickLogin}>
-            <div className="h-8 w-32 text-sm flex items-center justify-center">
-              <p className="text-white">Log In</p>
-            </div>
-          </PrimaryButton>
-        </div>
       </div>
     </div>
   );
