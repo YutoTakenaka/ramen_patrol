@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { api } from "../../services/api";
-import { TPost } from "../../types/types";
+import { TResponseGetPostsAll } from "../../types/types";
 import { Layout } from "../organisms/Layout";
 import PostIndex from "../organisms/PostIndex";
 
 export default function TopPage() {
-  const [postData, setPostData] = useState<TPost[]>([]);
+  const [postData, setPostData] = useState<TResponseGetPostsAll[]>([]);
   useEffect(() => {
     const getPostsAll = async () => {
       const response = await api.get("/get_posts_all");
@@ -17,14 +17,15 @@ export default function TopPage() {
 
   return (
     <Layout>
-      {postData.map((post, i) => (
+      {postData.map((item, i) => (
         <div key={i}>
           <PostIndex
-            image={post.image}
-            caption={post.caption}
-            location={post.location}
-            userId={post.user_id}
-            postId={post.post_id}
+            image={item.post.image}
+            caption={item.post.caption}
+            location={item.post.location}
+            username={item.user.username}
+            userId={item.post.user_id}
+            postId={item.post.post_id}
           />
         </div>
       ))}

@@ -16,7 +16,7 @@ import SwitchButton from "../molecules/inputs/Switch";
 import PrimaryButton from "../molecules/buttons/PrimaryButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../../services/api";
-import { TPost } from "../../types/types";
+import { TResponseGetPostsAll } from "../../types/types";
 
 export const EditPage = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export const EditPage = () => {
   // @todo imageの型をファイル型に修正する
   const [file, setFile] = useState<string | Blob>("");
   const [fileName, setFileName] = useState<string>("");
-  const [targetPost, setTargetPost] = useState<TPost>();
+  const [targetPost, setTargetPost] = useState<TResponseGetPostsAll>();
   const postId = params.id as string;
   useEffect(() => {
     const getPost = async () => {
@@ -59,7 +59,7 @@ export const EditPage = () => {
         image: fileName,
         caption,
         location,
-        user_id: targetPost?.user_id,
+        user_id: targetPost?.post.user_id,
       })
       .then(() => navigate("/"))
       .catch((error) => console.error(error));
@@ -96,7 +96,9 @@ export const EditPage = () => {
           <div>
             <div className="flex items-center p-2">
               <AccountCircleIcon style={{ fontSize: 40 }} />
-              <p className="ml-2 font-light">Takenaka Yuto</p>
+              <p className="ml-2 font-light">
+                {targetPost?.user.username && targetPost?.user.username}
+              </p>
             </div>
             <div className="flex h-4/5">
               <div className="w-1/2 font-light text-xs text-gray-400 h-full m-2">
@@ -108,7 +110,7 @@ export const EditPage = () => {
                   className="w-full h-full text-black p-1"
                   colorScheme="pink"
                   variant="filled"
-                  defaultValue={targetPost?.caption}
+                  defaultValue={targetPost?.post.caption}
                   size="lg"
                 />
               </div>
@@ -120,7 +122,7 @@ export const EditPage = () => {
                   variant="unstyled"
                   className="font-light text-xs text-gray-500 my-2 py-1 pl-1 w-full"
                   value={location}
-                  defaultValue={targetPost?.location}
+                  defaultValue={targetPost?.post.location}
                   onChange={(e) => handleChangeLocation(e)}
                 />
                 <Divider />
