@@ -10,7 +10,6 @@ import { useAuth } from "../../providers/useAuth";
 export const SideBar = () => {
   const navigate = useNavigate();
   const { logout, token, loginUser } = useAuth();
-  console.log(token);
 
   const onClickHome = () => navigate("/");
 
@@ -41,6 +40,39 @@ export const SideBar = () => {
     logout();
     navigate("/login");
   };
+
+  const noUserSideMenu = [
+    {
+      id: "home",
+      icon: <HomeRoundedIcon />,
+      label: "Home",
+      onClick: onClickHome,
+    },
+    {
+      id: "search",
+      icon: <SearchIcon />,
+      label: "Search",
+      onClick: onClickSearch,
+    },
+    {
+      id: "create",
+      icon: <AddCircleOutlineRoundedIcon />,
+      label: "Create",
+      onClick: onClickCreate,
+    },
+    {
+      id: "favorite",
+      icon: <FavoriteBorderRoundedIcon />,
+      label: "Favorite",
+      onClick: onClickFavorite,
+    },
+    {
+      id: "login",
+      icon: <AssignmentReturnRoundedIcon />,
+      label: "Login",
+      onClick: onClickLogout,
+    },
+  ];
 
   const sideMenu = [
     {
@@ -80,8 +112,7 @@ export const SideBar = () => {
       onClick: onClickLogout,
     },
   ];
-
-  const noUserSideMenu = sideMenu.filter((menu) => menu.id !== "profile");
+  // const noUserSideMenu = sideMenu.filter((menu) => menu.id !== "profile");
 
   return (
     <div className="w-52 min-w-min bg-white border-r fixed h-screen">

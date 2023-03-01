@@ -4,6 +4,7 @@ import FavoriteBorderRoundedIcon from "@material-ui/icons/FavoriteBorderRounded"
 import FavoriteRoundedIcon from "@material-ui/icons/FavoriteRounded";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { Button, Modal } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useCallback, useState } from "react";
@@ -11,6 +12,8 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
+import { useAuth } from "../../providers/useAuth";
+import { TResponseGetComment } from "../../types/types";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,6 +42,7 @@ type Props = {
   image: string;
   caption?: string;
   location?: string;
+  username: string;
   userId: number;
   postId: number;
 };
@@ -47,14 +51,19 @@ export default function PostIndex({
   image,
   caption,
   location,
+  username,
   userId,
   postId,
 }: Props) {
   const classes = useStyles();
   const navigate = useNavigate();
+  const { loginUser } = useAuth();
   const [open, setOpen] = useState<boolean>(false);
   const [like, setLike] = useState<boolean>(false);
   const [showAllCaption, setShowAllCaption] = useState<boolean>(false);
+  const [comment, setComment] = useState<string>("");
+  const [commentList, setCommentList] = useState<TResponseGetComment[]>([]);
+  const [isShowComment, setIsShowComment] = useState<boolean>(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -66,6 +75,19 @@ export default function PostIndex({
     like ? setLike(false) : setLike(true);
   };
 
+  const getCommentList = () => {
+    api
+      .get(`/get_comment/${postId}`)
+      .then((response) => {
+        setCommentList(response.data);
+        // console.log(response.data);
+        setIsShowComment(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   const onClickDelete = useCallback(() => {
     if (window.confirm("本当に削除しますか？")) {
       api
@@ -75,12 +97,49 @@ export default function PostIndex({
           window.location.reload();
         })
         .catch((error) => {
-          alert(error);
+          alert("削除に失敗しました。");
           setOpen(false);
           console.error(error);
         });
     }
   }, []);
+
+  const onClickViewComment = () => {
+    if (!isShowComment) {
+      getCommentList();
+    } else {
+      setIsShowComment(false);
+    }
+  };
+
+  const onClickCreateComment = () => {
+    api
+      .post("/create_comment", {
+        comment,
+        post_id: postId,
+        user_id: loginUser?.user_id,
+      })
+      .then(() => {
+        setComment("");
+        getCommentList();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const onClickDeleteComment = (commentId: number, commentUserId: number) => {
+    if (loginUser?.user_id !== commentUserId) return;
+    api
+      .post(`/delete_comment/${commentId}`)
+      .then(() => {
+        getCommentList();
+      })
+      .catch((error) => {
+        alert("削除に失敗しました。");
+        console.error(error);
+      });
+  };
 
   const body = (
     <div className={classes.paper}>
@@ -131,7 +190,7 @@ export default function PostIndex({
           <a href="/profile" className="flex items-center">
             <AccountCircleIcon />
             <div className="ml-2">
-              <p className="text-sm">takenaka_yuto{userId}</p>
+              <p className="text-sm">{username}</p>
               <p className="text-xs text-gray-500">{location}</p>
             </div>
           </a>
@@ -179,7 +238,7 @@ export default function PostIndex({
         </div>
         {/* caption */}
         <div className="m-2">
-          <p className="font-bold">takenaka_yuto{userId}</p>
+          <p className="font-bold">{username}</p>
           <div className="flex">
             {!!caption && caption?.length >= 20 ? (
               !showAllCaption ? (
@@ -197,7 +256,10 @@ export default function PostIndex({
                   <p className="w-full max-w-[368px]">{caption}</p>
                   <button
                     className="text-gray-400 hover:cursor-pointer text-right"
-                    onClick={() => setShowAllCaption(false)}
+                    onClick={() => {
+                      setShowAllCaption(false);
+                      setIsShowComment(false);
+                    }}
                   >
                     close
                   </button>
@@ -207,13 +269,49 @@ export default function PostIndex({
               <p>{caption}</p>
             )}
           </div>
-
-          <p className="text-gray-400 mb-4 hover:cursor-pointer">
-            View all comments
-          </p>
+          {/* comment */}
+          {isShowComment && (
+            <ul className="mt-6 text-sm text-gray-600">
+              {commentList.map((data) => (
+                <li
+                  className="mt-2 flex items-start max-w-[368px]"
+                  key={data.comment.comment_id}
+                >
+                  <p className="">{data.user.username}:</p>
+                  <p className="ml-2">{data.comment.comment}</p>
+                  {loginUser?.user_id === data.user.user_id ? (
+                    <DeleteIcon
+                      fontSize="small"
+                      onClick={() =>
+                        onClickDeleteComment(
+                          data.comment.comment_id,
+                          data.user.user_id
+                        )
+                      }
+                    />
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          )}
+          {isShowComment ? (
+            <button
+              className="text-gray-400 mb-4 hover:cursor-pointer hover:font-semibold"
+              onClick={onClickViewComment}
+            >
+              close all comments
+            </button>
+          ) : (
+            <button
+              className="text-gray-400 mb-4 hover:cursor-pointer hover:font-semibold"
+              onClick={onClickViewComment}
+            >
+              View all comments
+            </button>
+          )}
         </div>
         <hr />
-        {/* comment */}
+
         <div className="flex justify-between m-2">
           <div className="flex items-center">
             <AccountCircleIcon />
@@ -221,9 +319,17 @@ export default function PostIndex({
               className="ml-2 outline-none"
               type="text"
               placeholder="Add a comment..."
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
             />
           </div>
-          <Button className={classes.postButton}>Post</Button>
+          <Button
+            className={classes.postButton}
+            onClick={onClickCreateComment}
+            disabled={!loginUser}
+          >
+            Post
+          </Button>
         </div>
       </div>
       <Modal
